@@ -2,7 +2,7 @@
 
 ![logo](null)  
 
-# MMC Minecraft Mod Creator
+## Minecraft Mod Creator: Java Edition
 ![GitHub Repo stars](https://img.shields.io/github/stars/Nineleven-911/Minecraft-Mod-Creator-JE?style=flat)
 ![GitHub branch status](https://img.shields.io/github/checks-status/Nineleven-911/Minecraft-Mod-Creator-JE/main)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/t/Nineleven-911/Minecraft-Mod-Creator-JE)
