@@ -30,3 +30,10 @@ Forge 暂不支持
 
 # 使用方法
 暂未编写
+
+# Q&A
+
+#### - 我的环境报错了，怎么办？
+1. 使用`pip install -r requirements.txt`
+2. 检查是否缺少文件
+3. 我忘了上传文件了 (bushi
