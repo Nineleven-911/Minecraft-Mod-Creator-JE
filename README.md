@@ -1,6 +1,6 @@
 <div align="center">
 
-![logo](Github-assets/logo)  
+![logo](Github-assets/logo.png)  
 
 # 开发中
 ## Minecraft Mod Creator: Java Edition
