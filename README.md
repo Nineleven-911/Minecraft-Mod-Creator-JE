@@ -29,7 +29,10 @@ Forge 暂不支持
 Forge 可参见 [MCreator - The Best Minecraft Mod Maker Ever](https://mcreator.net/)
 
 # 使用方法
-暂未编写
+## 准备
+1. 使用`pip install -r requirements.txt`下载需要的库
+2. 将存储源码的文件夹改成一个合法的 `Python` 包(Package)名
+3. 作为包导入即可
 
 # Q&A
 
@@ -37,3 +40,7 @@ Forge 可参见 [MCreator - The Best Minecraft Mod Maker Ever](https://mcreator.
 1. 使用`pip install -r requirements.txt`
 2. 检查是否缺少文件
 3. 我忘了上传文件了 (bushi
+
+# 更多
+## 文档
+- 编写中
