@@ -26,7 +26,7 @@ Fabric 1.20.1
 
 Forge 暂不支持
 
-注：Forge 参见 MCreator <https://mcreator.net/>
+Forge 可参见 [MCreator - The Best Minecraft Mod Maker Ever](https://mcreator.net/)
 
 # 使用方法
 暂未编写
