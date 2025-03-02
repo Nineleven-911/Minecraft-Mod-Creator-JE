@@ -27,11 +27,14 @@ Fabric 1.20.1
 Forge 暂不支持
 
 Forge 可参见:
-[MCreator - The Best Minecraft Mod Maker Ever](https://mcreator.net/)
+
+[MCreator](https://mcreator.net/)
 ## 注意
 如果需要使用Gradle的gradle_build, 请先在
+
 [Fabric - Template Mod Generator](https://fabricmc.net/develop/template/)
-下载生成包, 所有信息按照创建ModSettings时的一致, 不选择`Spilt Client and Server`
+
+下载生成包, 所有信息按照创建ModSettings时的一致, 不选择`Spilt Client and Server`, 使用`Using Custom Id`并填上Minecraft支持的 小写字母+下划线(lowercase+underline)
 
 # 使用方法
 ## 准备
@@ -49,7 +52,7 @@ Forge 可参见:
 1. 使用`pip install -r requirements.txt`
 2. 检查是否缺少文件
 3. 安装一个Python 3.12.5环境
-4. 我忘了上传文件了 (bushi
+4. <span title="你是认真的? (bushi">我忘了上传文件了</span>
 
 - Build时报错
 1. 确保保存路径设置正确
