@@ -45,6 +45,35 @@ Forge 可参见:
 1. 下载开发包 参考 MMC是什么? / 注意
 2. 解压zip, 并设置ModSetting中的 `saving_path=${Your MDK Absolute location + /src}` 和 `gradle_location=${Your MDK Absolute location}`
 3. 使用`ModSetting.build()`或`ModSetting.gradle_build()`
+## 使用 (Fabric)
+```Python
+from v1_20_1 import Fabric as f
+# 创建一个模组设置对象 Create a ModSettings
+mod_setting = f.FabricModSettings(
+    mod_id="all_the_mods",
+    package_name="mc_group.all_the_mods.atm",
+    main_class_name="AllTheMods",
+    version="0.01.0",
+    name="All The Mods! ATM",
+    description="This mod adds a lot of mods! Enjoy it! ",
+    saving_path="D:/MinecraftMods/FabricMods/TEST-all_the_mods-fabric-1.20.1/src",
+    gradle_location="D:/MinecraftMods/FabricMods/TEST-all_the_mods-fabric-1.20.1"
+)
+# 创建物品 Create Item
+sapphire = (
+    f.Item("sapphire")
+    .set_texture("sapphire.png")
+    .set_translate_key("zh_cn", "蓝宝石")
+)
+# 添加至模组 Add it into the mod
+mod_setting.connect_mod(
+    sapphire
+)
+# Gradle 任务 Gradle Daemons
+mod_setting.build(f.BUILDING_EXAMPLE) # 生成src Generate /src
+mod_setting.gradle_runClient() # ./gradlew runClient
+mod_setting.exit() # 退出 Exit
+```
 
 # Q&A
 
