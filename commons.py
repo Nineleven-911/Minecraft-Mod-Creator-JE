@@ -2,7 +2,7 @@ import json
 import os
 import sys
 
-from . import logger
+from logger import logger
 
 
 class ModSettings:
