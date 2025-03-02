@@ -58,11 +58,19 @@ Forge 可参见:
 1. 确保保存路径设置正确
 2. 未使用自定义类
 
-- runClient或者runServer 出现 Uncaught Exception
+- `runClient` 或者 `runServer` 出现 `Uncaught Exception`
 1. 检查build.gradle和settings.gradle等配置文件编写正确
 2. 检查版本不支持、Fabric API版本不匹配等跟Minecraft或者Fabric的问题
 
-- 上面都没有我的问题或者解决方案无效
+- 程序在执行命令时乱码
+1. 使用
+``` Python
+import subprocess
+subprocess.run(['chcp', '65001'], shell=True)
+```
+
+- 上面都没有我的问题或者解决方案无效: 
+
   请在Issue或者Pull Request反馈这个问题
 
 # 更多
