@@ -48,6 +48,7 @@ Forge 可参见:
 ## 使用 (Fabric)
 ```Python
 from v1_20_1 import Fabric as f
+from commons import Language as lang
 # 创建一个模组设置对象 Create a ModSettings
 mod_setting = f.FabricModSettings(
     mod_id="all_the_mods",
@@ -63,7 +64,8 @@ mod_setting = f.FabricModSettings(
 sapphire = (
     f.Item("sapphire")
     .set_texture("sapphire.png")
-    .set_translate_key("zh_cn", "蓝宝石")
+    .add_translate_key(lang.en_us, "Sapphire")
+    .add_translate_key(lang.zh_cn, "蓝宝石")
 )
 # 添加至模组 Add it into the mod
 mod_setting.connect_mod(
@@ -72,7 +74,7 @@ mod_setting.connect_mod(
 # Gradle 任务 Gradle Daemons
 mod_setting.build(f.BUILDING_EXAMPLE) # 生成src Generate /src
 mod_setting.gradle_runClient() # ./gradlew runClient
-mod_setting.exit() # 退出 Exit
+mod_setting.exit() # 退出(是为交互式插件设计的) Exit (For interactive plugin)
 ```
 
 # Q&A
