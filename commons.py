@@ -1,91 +1,114 @@
 import json
-import os
-import sys
-
-from . import logger
+from abc import abstractmethod, ABC
+from enum import Enum
 
 
-class ModSettings:
-    def __init__(
-            self,
-            mod_id: str = "example_mod",
-            package_name: str = "com.example.examplemod",
-            main_class_name: str = "ExampleMod",
-            version: str = "1.0.0",
-            name: str = "Example Mod",
-            description: str = "This is an example description! Tell everyone what your mod is about!",
-            saving_path: str = "C:/mmc_generates"
-    ):
-        self.__setting = {
-            "package_name": package_name,
-            "mod_id": mod_id,
-            "version": version,
-            "main_class_name": main_class_name,
-            "name": name,
-            "desc": description
-        }
-        self.__class_path = {
-            "main": f"{package_name}.{main_class_name}",
-            "client": f"{package_name}.{main_class_name}Client",
-            "fabric-datagen": f"{package_name}.{main_class_name}DataGenerator",
-        }
-        self.__saving_path = saving_path.replace("\\", "/") + "/main"
+class Vector3:
+    def __init__(self, x: float, y: float, z: float):
+        self.x = float(x)
+        self.y = float(y)
+        self.z = float(z)
 
-    def build_jsons(self, example: str):
-        results = []
+    def __add__(self, other):
+        if isinstance(other, Vector3):
+            return Vector3(self.x + other.x, self.y + other.y, self.z + other.z)
+        elif isinstance(other, (int, float)):
+            return Vector3(self.x + other, self.y + other, self.z + other)
+        return NotImplemented
 
-        # fabric.mod.json
-        def recursion_replacing(k, v):
-            if isinstance(v, str):
-                for key, value in self.__setting.items():
-                    v = v.replace(f"${{{key}}}", value)
-                return v
-            elif isinstance(v, dict):
-                return {inner_key: recursion_replacing(inner_key, inner_val) for inner_key, inner_val in v.items()}
-            elif isinstance(v, list):
-                return [recursion_replacing(k, item) for item in v]
-            else:
-                return self.__setting.get(k, v)
+    def __sub__(self, other):
+        if isinstance(other, Vector3):
+            return Vector3(self.x - other.x, self.y - other.y, self.z - other.z)
+        elif isinstance(other, (int, float)):
+            return Vector3(self.x - other, self.y - other, self.z - other)
+        return NotImplemented
 
-        res = {}
-        k_v: dict[str, any] = json.loads(example)
+    def __mul__(self, other):
+        if isinstance(other, Vector3):
+            return Vector3(self.x * other.x, self.y * other.y, self.z * other.z)
+        elif isinstance(other, (int, float)):
+            return Vector3(self.x * other, self.y * other, self.z * other)
+        return NotImplemented
 
-        for k, v in k_v.items():
-            res[k] = recursion_replacing(k, v)
-        logger.info("\"fabric.mod.json\" generated.")
+    def __repr__(self):
+        return f"Vector3({self.x}, {self.y}, {self.z})"
 
-        results.append(json.dumps(res, indent=2))
 
-        # ${mod_id}.mixins.json
+class BaseFunction:
+    def __init__(self, class_name: str, package: str):
+        self.class_name = class_name
+        self.codes = []
+        self.package = package
 
-        # ${mod_id}.client.mixins.json
+    def create_entity(self, vec: Vector3, entity_type: str):
+        self.codes.append(
+            f"{entity_type} entity_obj = {entity_type}();"
+        )
+        return self
 
-        return results
 
-    def build(self, mod_json: str, is_substitution: bool = True):
-        def create_and_change(path: str):  # 判断path是否存在, 不存在则创建
-            if not os.path.exists(path):
-                os.makedirs(path)
-                logger.info("Path", path
-                if self.__saving_path not in path else path.replace("\\", "/").replace(self.__saving_path, ""),
-                            "does not exist. Created directory.")
-            os.chdir(path)
-            logger.info("Working directory changed to",
-                        os.getcwd().replace("\\", "/").replace(self.__saving_path, ""), "."
-                        )
-        # 生成 main/java
-        create_and_change(self.__saving_path + "/java")
+class Plugin:
+    class Fabric(Enum):
+        TemplateModGenerator_OnWebDriver = 0
+        TemplateModGenerator_OnLocal = 1
 
-        create_and_change(self.__setting["package_name"].replace(".", "/"))
-        # /todo
+    class Forge(Enum):
+        MdkDownload_OnWebDriver = 0
+        MdkDownload_OnLocal = 1
 
-        # 生成 main/resources
-        create_and_change(self.__saving_path + "/resources")
 
-        # 生成 main/resources/assets
-        create_and_change(self.__saving_path + "/resources/assets")
-        # /todo
+class Language(Enum):
+    zh_cn = "zh_cn"
+    en_us = "en_us"
 
-        # 生成 main/resources/data
-        create_and_change(self.__saving_path + "/resources/data")
-        # /todo
+
+def rep_str(text: str, mapping: dict[str, str]):
+    """
+    替换 text 中的 ${}
+
+    :param text: 要进行替换的字符串
+    :param mapping: 字符串中 ${} 的映射
+    :return: 替换后的字符串
+    """
+    for key, value in mapping.items():
+        text = text.replace(f"${{{key}}}", value)
+
+    return text
+
+
+def rep_dict(d_text: str | dict[str, any], mapping: dict[str, str], replace_key: bool = False) -> dict:
+    """
+    替换 text 中键和值的 ${}
+
+    :param d_text: 要进行替换的字符串JSON (字典)
+    :param mapping: 字符串中 ${} 的映射
+    :param replace_key: 是否替换键中的 ${}
+    :return: 替换后的字典
+    """
+    # {"aa${w}": "b${q}", "bb": {"aaa", "${lai-cai}"}}
+    # 初始化结果字典
+    result = dict()
+
+    # 根据 d_text 类型，将其转换为字典
+    if isinstance(d_text, dict):
+        text = d_text
+    else:
+        text = json.loads(d_text)
+    # 遍历字典的键值对
+    for key, value in text.items():
+        # 如果值是dict或list类型，则递归调用 replace_dict
+        if isinstance(value, dict):
+            value = rep_dict(value, mapping)
+        elif isinstance(value, list):
+            value = [rep_str(i, mapping) for i in value]
+        # 如果值是字符串类型，则调用 replace_str 替换字符串中的 ${}
+        elif isinstance(value, str):
+            value = rep_str(value, mapping)
+        # 根据 replace_key 参数决定是否替换键
+        if replace_key:
+            result[rep_str(key, mapping)] = value
+        else:
+            result[key] = value
+
+    # 返回替换后的结果字典
+    return result

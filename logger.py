@@ -4,7 +4,7 @@ import time
 from colorama import Fore
 
 
-def debug(*msg: str):
+def debug(*msg: str, on_thread: str = "main"):
     t = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     caller = os.path.splitext(
         os.path.basename(
@@ -14,11 +14,11 @@ def debug(*msg: str):
     )[0]
 
     print(
-        f"{Fore.BLUE}[{t}] {Fore.GREEN}[main/DEBUG] {Fore.CYAN}({caller}) {Fore.RESET}{" ".join(msg)}"
+        f"{Fore.BLUE}[{t}] {Fore.GREEN}[{on_thread}/DEBUG] {Fore.CYAN}({caller}) {Fore.RESET}{" ".join(msg)}"
     )
 
 
-def info(*msg: str):
+def info(*msg: str, on_thread: str = "main"):
     t = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     caller = os.path.splitext(
         os.path.basename(
@@ -28,11 +28,11 @@ def info(*msg: str):
     )[0]
 
     print(
-        f"{Fore.BLUE}[{t}] {Fore.GREEN}[main/INFO] {Fore.CYAN}({caller}) {Fore.RESET}{" ".join(msg)}"
+        f"{Fore.BLUE}[{t}] {Fore.GREEN}[{on_thread}/INFO] {Fore.CYAN}({caller}) {Fore.RESET}{" ".join(msg)}"
     )
 
 
-def warn(*msg: str):
+def warn(*msg: str, on_thread: str = "main"):
     t = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     caller = os.path.splitext(
         os.path.basename(
@@ -42,11 +42,11 @@ def warn(*msg: str):
     )[0]
 
     print(
-        f"{Fore.BLUE}[{t}] {Fore.GREEN}[main/WARN] {Fore.CYAN}({caller}) {Fore.RESET}WARNING: {" ".join(msg)}"
+        f"{Fore.BLUE}[{t}] {Fore.GREEN}[{on_thread}/WARN] {Fore.CYAN}({caller}) {Fore.RESET}WARNING: {" ".join(msg)}"
     )
 
 
-def fatal(*msg: str):
+def fatal(*msg: str, on_thread: str = "main"):
     t = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     caller = os.path.splitext(
         os.path.basename(
@@ -56,6 +56,6 @@ def fatal(*msg: str):
     )[0]
 
     print(
-        f"{Fore.BLUE}[{t}] {Fore.GREEN}[main/FATAL] {Fore.CYAN}({caller}) {Fore.RED}FATAL ERROR: {" ".join(msg)}{Fore.RESET}"
+        f"{Fore.BLUE}[{t}] {Fore.GREEN}[{on_thread}/FATAL] {Fore.CYAN}({caller}) {Fore.RED}FATAL ERROR: {" ".join(msg)}{Fore.RESET}"
     )
     raise SystemExit(1)

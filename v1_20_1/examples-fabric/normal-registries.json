@@ -1,0 +1,4 @@
+{
+  "Item": "public static final ${class_name} ${upper_id} = registryItem(\n        new ${class_name}(\n                new FabricItemSettings()${properties}\n       ),\n        \"${id}\"\n    );",
+  "Block": "public static final ${class_name} ${upper_id} = registryBlock(\n        new ${class_name}(\n                new FabricBlockSettings()${properties}\n        ),\n        \"${id}\"\n    );"
+}
