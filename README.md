@@ -63,7 +63,7 @@ mod_setting = f.FabricModSettings(
 # 创建物品 Create Item
 sapphire = (
     f.Item("sapphire")
-    .set_texture("sapphire.png")
+    .set_texture("C:/sapphire.png") # Requires absolute position!
     .add_translate_key(lang.en_us, "Sapphire")
     .add_translate_key(lang.zh_cn, "蓝宝石")
 )
