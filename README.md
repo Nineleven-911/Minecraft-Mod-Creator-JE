@@ -68,11 +68,14 @@ sapphire = (
     .add_translate_key(lang.zh_cn, "蓝宝石")
 )
 # 添加至模组 Add it into the mod
-mod_setting.connect_mod(
+mod_setting.connect(
     sapphire
 )
 # Gradle 任务 Gradle Daemons
-mod_setting.build(f.BUILDING_EXAMPLE) # 生成src Generate /src
+mod_setting.build(
+    mod_json=f.BUILDING_EXAMPLE,
+    languages=[lang.en_us, lang.zh_cn]
+) # 生成src Generate /src
 mod_setting.gradle_runClient() # ./gradlew runClient
 mod_setting.exit() # 退出(是为交互式插件设计的) Exit (For interactive plugin)
 ```
